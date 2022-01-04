@@ -34,23 +34,27 @@
     const files = [];
 
     function loadDoc() {
-      var xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-          myFunction(this);
-        }
-      };
-      xhttp.open("GET", "https://api.github.com/repos/jadrsamara/Multimedia/contents/media/", true);
-      xhttp.send();
+      // var xhttp = new XMLHttpRequest();
+      // xhttp.onreadystatechange = function () {
+      //   if (this.readyState == 4 && this.status == 200) {
+      //     myFunction(this);
+      //   }
+      // };
+      // xhttp.open("GET", "https://api.github.com/repos/jadrsamara/Multimedia/contents/media/", true);
+      // xhttp.send();
+
+      files = ['Nobody','PeakyBlinders'];
     }
 
     function myFunction(xml) {
 
-      response = JSON.parse(xml.responseText);
+      console.log(xml.responseText);
 
-      response.forEach(element => {
-        files.push(element.name);
-      });
+      // response = JSON.parse(xml.responseText);
+
+      // response.forEach(element => {
+      //   files.push(element.name);
+      // });
 
       load();
     }
@@ -92,7 +96,7 @@
       fetch("./media/" + name + "/description.txt")
         .then(r => r.text())
         .then(t => {
-          if (t.includes("Cannot GET ") == true) {
+          if (t[0] !== '<') {
             p.innerHTML = "<p>­</p><p>No description.</p><p>­</p>";
           } else {
             p.innerHTML = t;
@@ -112,6 +116,28 @@
       for (i = 0; i < files.length; i++) {
         addDiv(files[i]);
       }
+    }
+
+
+    // ***************************************************************************************
+    // loadfile('PeakyBlinders/description.txt');
+
+    function loadfile(path) {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          myFunctionFile(this);
+        }
+      };
+      xhttp.open("GET", "https://raw.githubusercontent.com/jadrsamara/Multimedia/main/media/"+path, true);
+      xhttp.send();
+    }
+
+    function myFunctionFile(xml) {
+
+      console.log(xml.responseText);
+
+      load();
     }
 
   </script>
