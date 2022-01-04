@@ -45,26 +45,13 @@
     }
 
     function myFunction(xml) {
-      // console.log(xml.responseText);
-      // var parser = new DOMParser();
-      // var htmlDoc = parser.parseFromString(xml.responseText, 'text/html');
-      // console.log(htmlDoc);
 
       response = JSON.parse(xml.responseText);
 
-      console.log(response[0].name)
+      response.forEach(element => {
+        files.push(element.name);
+      });
 
-      var lst = [];
-
-      for (i = 1; i < htmlDoc.getElementsByTagName("li").length; i++) {
-        var ind = htmlDoc.getElementsByTagName("li")[i].innerHTML.indexOf("/Multimedia/media/") + 7;
-        for (k = 0; htmlDoc.getElementsByTagName("li")[i].innerHTML[ind + k] != '"'; k++) {
-          lst.push(htmlDoc.getElementsByTagName("li")[i].innerHTML[ind + k]);
-        }
-        files.push(lst.join(""));
-        lst = [];
-      }
-      //console.log(files);
       load();
     }
 
