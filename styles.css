@@ -1,0 +1,237 @@
+
+body {
+    background-color: rgb(29, 29, 29);
+    font-family: 'Open Sans', sans-serif;
+    font-family: 'Roboto Slab', serif;
+    margin: 0%;
+}
+
+.main-a {
+    color: #cccccc;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    background-color: rgb(46, 46, 46, 0.55);
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+a {
+    color: #cccccc;
+    text-decoration: none;
+}
+
+.head_img {
+    padding-left: 1%;
+}
+
+.head_txt {
+    padding-left: 1%;
+}
+
+.imgg {
+    width: 69vw;
+    height: 100vw;
+}
+
+.container {
+    display: block;
+    align-items: center;
+    justify-content: space-between;
+
+    margin: auto;
+    margin-top: 5%;
+    width: 85%;
+    color: #cccccc;
+    padding: 10px;
+}
+
+/* .video:mos {
+    background-color: rgba(255, 255, 255, 0.507);
+} */
+
+.video {
+    margin-bottom: 10%;
+    margin-left: 7%;
+    overflow-wrap: break-word;
+    inline-size: 69vw;
+    font-size: 3vw;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+.box {
+    background-image: linear-gradient(rgb(29, 29, 29, 0.3), rgb(34, 34, 34, 0.5), rgb(29, 29, 29, 0.7));
+    padding: 5%;
+}
+
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media (orientation: landscape) {
+
+    .container {
+        margin-top: 3%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        width: 85%;
+    }
+
+    .imgg {
+        width: 18vw;
+        height: 27vw;
+    }
+
+    .video {
+        margin-top: 0%;
+        margin-left: auto;
+        margin-right: auto;
+        inline-size: 18vw;
+        font-size: 0.85vw;
+        margin-bottom: 3%;
+    }
+
+}
+
+/* video section */
+
+.head_img {
+    padding-left: 1%;
+}
+
+.head_txt {
+    padding-left: 1%;
+}
+
+.vcontainer {
+    margin: auto;
+    margin-top: 0%;
+    text-align: center;
+    width: 85%;
+    color: #cccccc;
+    padding: 10px;
+}
+
+.vheadder {
+    color: #cccccc;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    background-color: rgb(46, 46, 46, 0.4);
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media (orientation: landscape) {
+
+    video {
+        width: 69%;
+    }
+}
+
+body {
+    backdrop-filter: blur(20px) brightness(0.5);
+    background-image: url(/color.PNG);
+    transition: all .1s linear;
+    background-size: cover;
+}
+
+.back_img {
+    position: fixed;
+    top: 2em;
+    left: 2em;
+    min-width: 60px;
+    min-height: 60px;
+    z-index: 1;
+    padding: 1em;
+    border-radius: 1em;
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 2.5em 2.5em rgba(0,0,0, 0.5);
+}
+
+#vid {
+    width: 100vw;
+    height: 100vh;
+    object-fit: contain;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    background-color: black;
+  }
+
+#black {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100vw;
+    height: 100vh;
+    color: #cccccc;
+}
+
+#des {
+    width: 50%;
+    height: 50%;
+}
+
+.meta-container {
+    overflow-wrap: break-word;
+    inline-size: 100vw;
+    width: 75%;
+    /* Center vertically and horizontally */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    opacity: 1;
+    animation-name: fadeInOpacity;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in;
+    animation-duration: 1s;
+}
+
+@keyframes fadeInOpacity {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.paused {
+    font-size: 1vw;
+    margin-top: 2.5%;
+}
+
+#des .meta {
+    font-size: 1.50vw;
+    color: #f3f3f3;
+}
+
+#des .snippet {
+    font-size: 1.25vw;
+    color: #e0e0e0;
+}
+
+#black .title {
+    font-size: 2.95vw;
+    color: #f3f3f3;
+}
+
+
+@media (orientation: portrait) {
+    #vid {
+        object-fit: contain;
+    }
+
+    #des .meta {
+        font-size: 1.50vh;
+    }
+
+    #des .snippet {
+        font-size: 1.25vh;
+    }
+
+    #black .title {
+        font-size: 2.95vh;
+    }
+}

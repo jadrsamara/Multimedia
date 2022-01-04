@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<script src="http://cdn.dashjs.org/latest/dash.all.min.js" ></script>
+
+<link rel="icon"
+      href="favicon.ico">
+
+<link rel="stylesheet" href="styles.css">
+
+<html>
+    <head>
+        <title id="title"></title>
+    </head>
+    <body>
+        
+        <video id="vid" data-dashjs-player width="100%" controls></video>
+
+        <a id="back" href="/">
+            <img class="back_img" width="4%" src="back.png">
+        </a>
+
+        <div id="black" onclick="hide()">
+            <div class="meta-container">
+                <h1 id="ttl" class="title">null</h1>
+                <div id="des"></div>
+                <p class="paused">Paused</p>
+            </div>
+        </div>
+
+        <script>
+            var movie = sessionStorage.getItem("movie");
+            document.getElementById('title').innerHTML = movie;
+            document.getElementById('ttl').innerHTML = movie;
+            document.getElementById('vid').src = "/media/"+movie+"/dash/video-manifest.mpd";
+        </script>
+
+        <script>
+            var p = document.createElement("p");
+            fetch("./media/"+movie+"/description.txt")
+            .then( r => r.text() )
+            .then( t => {
+              if(t.includes("Not Found")==true){
+              p.innerHTML = "<br><p>No description.</p><br>";
+            } else {
+            p.innerHTML = t; }});
+            document.getElementById("des").appendChild(p);
+        </script>
+
+        <script>
+            const video = document.querySelector('video');
+
+            video.addEventListener('playing', (event) => {
+            // console.log('Video is no longer paused');
+            });
+
+            video.addEventListener('pause', (event) => {
+            // console.log('Video is paused');
+            document.getElementById('black').style.visibility = "visible";
+            document.getElementById('back').style.visibility = "visible";
+            });
+
+            function hide(){
+                document.getElementById('black').style.visibility = "hidden";
+                document.getElementById('back').style.visibility = "hidden";
+                video.play();
+            }
+        </script>
+
+    </body>
+</html>
+

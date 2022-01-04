@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+
+<script src="http://cdn.dashjs.org/latest/dash.all.min.js"></script>
+<script src="https://requirejs.org/docs/release/2.3.5/minified/require.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<link rel="icon" href="favicon.ico">
+
+<link rel="stylesheet" href="styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto+Slab:wght@300&display=swap"
+  rel="stylesheet">
+
+<html>
+
+<head>
+  <title>Main Page</title>
+</head>
+
+<body id="body">
+
+  <a class="main-a" href="/">
+    <img class="head_img" src="favicon.ico">
+    <h1 class="head_txt">Home</h1>
+  </a>
+
+  <div id="container" class="container">
+
+  </div>
+
+  <script>
+
+    const files = [];
+
+    function loadDoc() {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          myFunction(this);
+        }
+      };
+      xhttp.open("GET", "/media/", true);
+      xhttp.send();
+    }
+
+    function myFunction(xml) {
+      // console.log(xml.responseText);
+      var parser = new DOMParser();
+      var htmlDoc = parser.parseFromString(xml.responseText, 'text/html');
+
+      var lst = [];
+
+      for (i = 1; i < htmlDoc.getElementsByTagName("li").length; i++) {
+        var ind = htmlDoc.getElementsByTagName("li")[i].innerHTML.indexOf("/media/") + 7;
+        for (k = 0; htmlDoc.getElementsByTagName("li")[i].innerHTML[ind + k] != '"'; k++) {
+          lst.push(htmlDoc.getElementsByTagName("li")[i].innerHTML[ind + k]);
+        }
+        files.push(lst.join(""));
+        lst = [];
+      }
+      //console.log(files);
+      load();
+    }
+
+    loadDoc();
+
+    function addDiv(name) {
+      var node = document.createElement("div");
+      node.className = "video";
+
+      node.addEventListener("mouseover", function () {
+        chbg(name);
+      }, false);
+
+      node.addEventListener("mouseout", function () {
+        chbg_out();
+      }, false);
+
+      var a = document.createElement("a");
+      //a.onClick = "myHandler(\""+name+"\");";
+      a.addEventListener("click", function () {
+        myHandler(name);
+      }, false);
+      a.id = name;
+      a.href = "/video.html";
+
+      var img = document.createElement("img");
+      img.className = "imgg";
+      img.src = "/media/" + name + "/" + name + ".jpg";
+
+      var div = document.createElement("div");
+      div.className = "box";
+
+      var h2 = document.createElement("h2");
+      h2.innerHTML = name;
+      div.appendChild(h2);
+
+      var p = document.createElement("p");
+      fetch("./media/" + name + "/description.txt")
+        .then(r => r.text())
+        .then(t => {
+          if (t.includes("Cannot GET ") == true) {
+            p.innerHTML = "<p>­</p><p>No description.</p><p>­</p>";
+          } else {
+            p.innerHTML = t;
+          }
+        });
+
+      div.appendChild(p);
+
+      node.appendChild(a);
+      a.appendChild(img);
+      a.appendChild(div);
+
+      document.getElementById("container").appendChild(node);
+    }
+
+    function load() {
+      for (i = 0; i < files.length; i++) {
+        addDiv(files[i]);
+      }
+    }
+
+  </script>
+
+
+  <script>
+    var movie = "null";
+    // your handler
+    function myHandler(e) {
+      movie = e;
+      sessionStorage.setItem("movie", movie);
+    }
+  </script>
+
+    <script>
+      function chbg(background) {
+        document.body.style.backgroundImage = "url(/media/" + background + "/" + background + ".jpg" + ")";
+
+        $(".video").hover(function() {
+          $(this).css("background-color","rgba(29, 29, 29, 0.507)")
+        });
+        
+        $(".video").mouseover(function() {
+          $(this).css("background-color","rgb(0, 0, 0, 0.75)")
+        });
+      }
+
+      function chbg_out() {
+        document.body.style.backgroundImage = 'url(/color.PNG)';
+      }
+    </script>
+
+</body>
