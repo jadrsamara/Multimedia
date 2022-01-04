@@ -16,7 +16,7 @@
         <video id="vid" data-dashjs-player width="100%" controls></video>
 
         <a id="back" href="/">
-            <img class="back_img" width="4%" src="back.png">
+            <img class="back_img" width="4%" src="/Multimedia/back.png">
         </a>
 
         <div id="black" onclick="hide()">
@@ -31,12 +31,12 @@
             var movie = sessionStorage.getItem("movie");
             document.getElementById('title').innerHTML = movie;
             document.getElementById('ttl').innerHTML = movie;
-            document.getElementById('vid').src = "/media/"+movie+"/dash/video-manifest.mpd";
+            document.getElementById('vid').src = "/Multimedia/media/"+movie+"/dash/video-manifest.mpd";
         </script>
 
         <script>
             var p = document.createElement("p");
-            fetch("./media/"+movie+"/description.txt")
+            fetch("./Multimedia/media/"+movie+"/description.txt")
             .then( r => r.text() )
             .then( t => {
               if(t.includes("Not Found")==true){

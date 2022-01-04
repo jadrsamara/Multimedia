@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<script src="http://cdn.dashjs.org/latest/dash.all.min.js"></script>
+<script src="https://cdn.dashjs.org/latest/dash.all.min.js"></script>
 <script src="https://requirejs.org/docs/release/2.3.5/minified/require.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -40,7 +40,7 @@
           myFunction(this);
         }
       };
-      xhttp.open("GET", "/media/", true);
+      xhttp.open("GET", "/Multimedia/media/", true);
       xhttp.send();
     }
 
@@ -52,7 +52,7 @@
       var lst = [];
 
       for (i = 1; i < htmlDoc.getElementsByTagName("li").length; i++) {
-        var ind = htmlDoc.getElementsByTagName("li")[i].innerHTML.indexOf("/media/") + 7;
+        var ind = htmlDoc.getElementsByTagName("li")[i].innerHTML.indexOf("/Multimedia/media/") + 7;
         for (k = 0; htmlDoc.getElementsByTagName("li")[i].innerHTML[ind + k] != '"'; k++) {
           lst.push(htmlDoc.getElementsByTagName("li")[i].innerHTML[ind + k]);
         }
