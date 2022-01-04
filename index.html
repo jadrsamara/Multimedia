@@ -40,14 +40,19 @@
           myFunction(this);
         }
       };
-      xhttp.open("GET", "/Multimedia/media/", true);
+      xhttp.open("GET", "https://api.github.com/repos/jadrsamara/Multimedia/contents/media/", true);
       xhttp.send();
     }
 
     function myFunction(xml) {
       // console.log(xml.responseText);
-      var parser = new DOMParser();
-      var htmlDoc = parser.parseFromString(xml.responseText, 'text/html');
+      // var parser = new DOMParser();
+      // var htmlDoc = parser.parseFromString(xml.responseText, 'text/html');
+      // console.log(htmlDoc);
+
+      response = JSON.parse(xml.responseText);
+
+      console.log(response[0].name)
 
       var lst = [];
 
