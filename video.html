@@ -16,7 +16,7 @@
         <video id="vid" data-dashjs-player width="100%" controls></video>
 
         <a id="back" href="/">
-            <img class="back_img" width="4%" src="/Multimedia/back.png">
+            <img class="back_img" width="4%" src="https://raw.githubusercontent.com/jadrsamara/Multimedia/main/back.png">
         </a>
 
         <div id="black" onclick="hide()">
@@ -31,18 +31,19 @@
             var movie = sessionStorage.getItem("movie");
             document.getElementById('title').innerHTML = movie;
             document.getElementById('ttl').innerHTML = movie;
-            document.getElementById('vid').src = "/Multimedia/media/"+movie+"/dash/video-manifest.mpd";
+            document.getElementById('vid').src = "https://raw.githubusercontent.com/jadrsamara/Multimedia/main/media/"+movie+"/dash/video-manifest.mpd";
         </script>
 
         <script>
             var p = document.createElement("p");
-            fetch("./Multimedia/media/"+movie+"/description.txt")
+            fetch("https://raw.githubusercontent.com/jadrsamara/Multimedia/main/media/"+movie+"/description.txt")
             .then( r => r.text() )
             .then( t => {
-              if(t.includes("Not Found")==true){
-              p.innerHTML = "<br><p>No description.</p><br>";
+              if(t.includes("class=\"meta\"")){
+                p.innerHTML = t;
             } else {
-            p.innerHTML = t; }});
+                p.innerHTML = "<br><p>No description.</p><br>";
+            }});
             document.getElementById("des").appendChild(p);
         </script>
 

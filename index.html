@@ -44,6 +44,7 @@
       // xhttp.send();
 
       files = ['Nobody','PeakyBlinders'];
+      load();
     }
 
     function myFunction(xml) {
@@ -74,7 +75,6 @@
       }, false);
 
       var a = document.createElement("a");
-      //a.onClick = "myHandler(\""+name+"\");";
       a.addEventListener("click", function () {
         myHandler(name);
       }, false);
@@ -83,7 +83,7 @@
 
       var img = document.createElement("img");
       img.className = "imgg";
-      img.src = "/media/" + name + "/" + name + ".jpg";
+      img.src = "https://raw.githubusercontent.com/jadrsamara/Multimedia/main/media/" + name + "/" + name + ".jpg";
 
       var div = document.createElement("div");
       div.className = "box";
@@ -93,13 +93,13 @@
       div.appendChild(h2);
 
       var p = document.createElement("p");
-      fetch("./media/" + name + "/description.txt")
+      fetch("https://raw.githubusercontent.com/jadrsamara/Multimedia/main/media/" + name + "/description.txt")
         .then(r => r.text())
         .then(t => {
-          if (t[0] !== '<') {
-            p.innerHTML = "<p>­</p><p>No description.</p><p>­</p>";
-          } else {
+          if (t.includes("class=\"meta\"")) {
             p.innerHTML = t;
+          } else {
+            p.innerHTML = "<p>­</p><p>No description.</p><p>­</p>";
           }
         });
 
@@ -137,7 +137,6 @@
 
       console.log(xml.responseText);
 
-      load();
     }
 
   </script>
