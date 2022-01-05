@@ -77,15 +77,15 @@ a {
     }
 
     .imgg {
-        width: 18vw;
-        height: 27vw;
+        width: 15vw;
+        height: 24vw;
     }
 
     .video {
         margin-top: 0%;
         margin-left: auto;
         margin-right: auto;
-        inline-size: 18vw;
+        inline-size: 15vw;
         font-size: 0.85vw;
         margin-bottom: 3%;
     }
@@ -207,6 +207,11 @@ body {
     color: #f3f3f3;
 }
 
+.snippet {
+    font-size: 1.35vh;
+    color: #e0e0e0;
+}
+
 #des .snippet {
     font-size: 1.25vw;
     color: #e0e0e0;
@@ -252,3 +257,4 @@ body {
     right: 2em;
     z-index: 1;
 }
+
