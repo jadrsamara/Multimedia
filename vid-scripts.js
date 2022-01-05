@@ -20,6 +20,8 @@ const video = document.querySelector('video');
 
 video.addEventListener('playing', (event) => {
     // console.log('Video is no longer paused');
+    document.getElementById('black').style.visibility = "hidden";
+    document.getElementById('back').style.visibility = "hidden";
 });
 
 video.addEventListener('pause', (event) => {
