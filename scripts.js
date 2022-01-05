@@ -76,7 +76,8 @@ function addDiv(name) {
     a.appendChild(img);
     a.appendChild(div);
 
-    document.getElementById("container").appendChild(node);
+    const container = document.getElementById("container");
+    container.appendChild(node);
 }
 
 function load() {
