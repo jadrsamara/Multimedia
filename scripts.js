@@ -10,7 +10,7 @@ function loadDoc() {
     // xhttp.open("GET", "https://api.github.com/repos/jadrsamara/Multimedia/contents/media/", true);
     // xhttp.send();
 
-    files = ['Nobody', 'PeakyBlinders'];
+    files = ['Nobody', 'PeakyBlinders', 'Tenet', 'Godfather', 'Interstellar', 'Moneyball', 'Vikings'];
     load();
 }
 
