@@ -1,32 +1,29 @@
 <!DOCTYPE html>
-
-<script src="vid-scripts.js"></script>
-<script src="https://cdn.dashjs.org/latest/dash.all.min.js" ></script>
-
-<link rel="icon"
-      href="favicon.ico">
-
-<link rel="stylesheet" href="styles.css">
-
 <html>
-    <head>
-        <title id="title"></title>
-    </head>
-    <body>
-        
-        <video id="vid" data-dashjs-player width="100%" controls></video>
 
-        <a id="back" href="/Multimedia">
-            <img class="back_img" width="4%" src="https://raw.githubusercontent.com/jadrsamara/Multimedia/main/back.png">
-        </a>
+<head>
+    <title id="title"></title>
+    <script src="vid-scripts.js"></script>
+    <script src="https://cdn.dashjs.org/latest/dash.all.min.js"></script>
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="styles.css">
+</head>
 
-        <div id="black" onclick="hide()">
-            <div class="meta-container">
-                <h1 id="ttl" class="title">null</h1>
-                <div id="des"></div>
-                <p class="paused">Paused</p>
-            </div>
+<body>
+
+    <video id="vid" data-dashjs-player width="100%" controls></video>
+
+    <a id="back" href="/Multimedia">
+        <img class="back_img" width="4%" src="https://raw.githubusercontent.com/jadrsamara/Multimedia/main/back.png">
+    </a>
+
+    <div id="black" onclick="hide()">
+        <div class="meta-container">
+            <h1 id="ttl" class="title">null</h1>
+            <div id="des"></div>
+            <p class="paused">Paused</p>
         </div>
-    </body>
-</html>
+    </div>
+</body>
 
+</html>
