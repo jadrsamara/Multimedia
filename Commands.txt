@@ -1,0 +1,178 @@
+ffprobe -hide_banner Godfather.mp4
+
+ffmpeg -i .mp4 -vf crop=1920:914 _21_10.mp4
+ffmpeg -i .mp4 -vf crop=1280:610 _21_10.mp4
+
+/------------------------------------------------------\ mp4box low quality /------------------------------------------------------\
+mkdir dash && ffmpeg -y -i Godfather_21_10.mp4 \
+ -an -b:v 500k "delete_me.mp4" \
+ -an -crf 27 -c:v libx264 -r 23.98 -x264opts 'keyint=48:min-keyint=48:no-scenecut' -vf drawtext=fontfile:text='576p':fontcolor=white:fontsize=48:box=1:boxcolor=black:boxborderw=5:x=20:y=20,scale=1024:438 -b:v 2100k "q_576.mp4" \
+ -an -crf 27 -c:v libx264 -r 23.98 -x264opts 'keyint=48:min-keyint=48:no-scenecut' -vf drawtext=fontfile:text='360p':fontcolor=white:fontsize=48:box=1:boxcolor=black:boxborderw=5:x=20:y=20,scale=640:274 -b:v 700k "q_360.mp4" \
+ -an -crf 27 -c:v libx264 -r 23.98 -x264opts 'keyint=48:min-keyint=48:no-scenecut' -vf drawtext=fontfile:text='144p':fontcolor=white:fontsize=48:box=1:boxcolor=black:boxborderw=5:x=20:y=20,scale=256:110 -b:v 350k "q_144.mp4" \
+ -vn -c:a aac -b:a 128k -ar 48000 "audio.m4a" \
+&& MP4Box -dash 2000 -frag 2000 -rap \
+-segment-name 'segment_$RepresentationID$_' -fps 23.98 \
+q_144.mp4#video:id=144p \
+q_360.mp4#video:id=360p \
+q_576.mp4#video:id=576p:role=main \
+audio.m4a#audio:id=Sound:role=main \
+-out dash/video-manifest.mpd
+
+
+/------------------------------------------------------\ mp4box high quality /------------------------------------------------------\
+mkdir dash && ffmpeg -y -i Nobody_21_10.mp4 \
+ -an -crf 27 -c:v libx264 -r 23.98 -x264opts 'keyint=48:min-keyint=48:no-scenecut' -vf drawtext=fontfile:text='1080p':fontcolor=white:fontsize=48:box=1:boxcolor=black:boxborderw=5:x=20:y=20,scale=1920:1080 -b:v 3000k "q_1080.mp4" \
+ -an -crf 27 -c:v libx264 -r 23.98 -x264opts 'keyint=48:min-keyint=48:no-scenecut' -vf drawtext=fontfile:text='720p':fontcolor=white:fontsize=48:box=1:boxcolor=black:boxborderw=5:x=20:y=20,scale=1280:720 -b:v 1500k "q_720.mp4" \
+ -an -crf 27 -c:v libx264 -r 23.98 -x264opts 'keyint=48:min-keyint=48:no-scenecut' -vf drawtext=fontfile:text='360p':fontcolor=white:fontsize=48:box=1:boxcolor=black:boxborderw=5:x=20:y=20,scale=640:360 -b:v 500k "q_360.mp4" \
+ -vn -c:a aac -b:a 128k -ar 48000 "audio.m4a" \
+&& MP4Box -dash 4000 -frag 2000 -rap \
+-segment-name 'segment_$RepresentationID$_' -fps 23.98 \
+q_360.mp4#video:id=360p \
+q_720.mp4#video:id=720p \
+q_1080.mp4#video:id=1080p:role=main \
+audio.m4a#audio:id=Sound:role=main \
+-out dash/video-manifest.mpd
+
+
+/------------------------------------------------------\ mp4box mix resolutions + bitrate /------------------------------------------------------\
+mkdir dash && ffmpeg -y -i TENET_21_10.mp4 \
+ -an -crf 24 -c:v libx264 -r 23.98 -x264opts 'keyint=48:min-keyint=48:no-scenecut' -vf drawtext=fontfile:text='1080p 5000k crf=24':fontcolor=white:fontsize=48:box=1:boxcolor=black:boxborderw=5:x=20:y=20,scale=1920:1080 -b:v 5000k "q_1080_h.mp4" \
+ -an -crf 27 -c:v libx264 -r 23.98 -x264opts 'keyint=48:min-keyint=48:no-scenecut' -vf drawtext=fontfile:text='1080p 3000k crf=27':fontcolor=white:fontsize=48:box=1:boxcolor=black:boxborderw=5:x=20:y=20,scale=1920:1080 -b:v 3000k "q_1080.mp4" \
+ -an -crf 24 -c:v libx264 -r 23.98 -x264opts 'keyint=48:min-keyint=48:no-scenecut' -vf drawtext=fontfile:text='720p 2000k crf=24':fontcolor=white:fontsize=48:box=1:boxcolor=black:boxborderw=5:x=20:y=20,scale=1280:720 -b:v 2000k "q_720_h.mp4" \
+ -an -crf 27 -c:v libx264 -r 23.98 -x264opts 'keyint=48:min-keyint=48:no-scenecut' -vf drawtext=fontfile:text='720p 1000k crf=27':fontcolor=white:fontsize=48:box=1:boxcolor=black:boxborderw=5:x=20:y=20,scale=1280:720 -b:v 1000k "q_720.mp4" \
+ -an -crf 24 -c:v libx264 -r 23.98 -x264opts 'keyint=48:min-keyint=48:no-scenecut' -vf drawtext=fontfile:text='360p 750k crf=24':fontcolor=white:fontsize=48:box=1:boxcolor=black:boxborderw=5:x=20:y=20,scale=640:360 -b:v 750k "q_360_h.mp4" \
+ -an -crf 27 -c:v libx264 -r 23.98 -x264opts 'keyint=48:min-keyint=48:no-scenecut' -vf drawtext=fontfile:text='360p 350k crf=27':fontcolor=white:fontsize=48:box=1:boxcolor=black:boxborderw=5:x=20:y=20,scale=640:360 -b:v 350k "q_360.mp4" \
+ -vn -c:a aac -b:a 128k -ar 48000 "audio.m4a" \
+ && MP4Box -dash 4000 -frag 2000 -rap \
+-segment-name 'segment_$RepresentationID$_' -fps 23.98 \
+q_360.mp4#video:id=360p \
+q_360_h.mp4#video:id=360p_h \
+q_720.mp4#video:id=720p \
+q_720_h.mp4#video:id=720p_h \
+q_1080.mp4#video:id=1080p \
+q_1080_h.mp4#video:id=1080p_h:role=main \
+audio.m4a#audio:id=Sound:role=main \
+-out dash/video-manifest.mpd
+
+
+/------------------------------------------------------\ mp4box - 25fps /------------------------------------------------------\
+mkdir dash && ffmpeg -y -i Peaky_Blinders_21_10.mp4 \
+ -an -crf 25 -c:v libx264 -r 25 -x264opts 'keyint=50:min-keyint=50:no-scenecut' -vf drawtext=fontfile:text='1080p':fontcolor=white:fontsize=48:box=1:boxcolor=black:boxborderw=5:x=20:y=20,scale=1920:1080 -b:v 3600k "q_1080.mp4" \
+ -an -crf 25 -c:v libx264 -r 25 -x264opts 'keyint=50:min-keyint=50:no-scenecut' -vf drawtext=fontfile:text='720p':fontcolor=white:fontsize=48:box=1:boxcolor=black:boxborderw=5:x=20:y=20,scale=1280:720 -b:v 1500k "q_720.mp4" \
+ -an -crf 25 -c:v libx264 -r 25 -x264opts 'keyint=50:min-keyint=50:no-scenecut' -vf drawtext=fontfile:text='360p':fontcolor=white:fontsize=48:box=1:boxcolor=black:boxborderw=5:x=20:y=20,scale=640:360 -b:v 500k "q_360.mp4" \
+ -vn -c:a aac -b:a 128k -ar 48000 "audio.m4a" \
+&& MP4Box -dash 4000 -frag 2000 -rap \
+-segment-name 'segment_$RepresentationID$_' -fps 25 \
+q_360.mp4#video:id=360p \
+q_720.mp4#video:id=720p \
+q_1080.mp4#video:id=1080p:role=main \
+audio.m4a#audio:id=Sound:role=main \
+-out dash/video-manifest.mpd  
+  
+  
+/------------------------------------------------------\ ffmpeg only vp9 /------------------------------------------------------\
+mkdir dash && ffmpeg -y -i Vikings_21_10.mp4 \
+ -an -f mp4 -crf 27 -c:v libvpx-vp9 -r 23.98 -keyint_min 48 -g 48 -vf drawtext=fontfile:text='1080p':fontcolor=white:fontsize=48:box=1:boxcolor=black:boxborderw=5:x=20:y=20,scale=1920:1080 -b:v 4800k "q_1080.webm" \
+ -an -f mp4 -crf 27 -c:v libvpx-vp9 -r 23.98 -keyint_min 48 -g 48 -vf drawtext=fontfile:text='720p':fontcolor=white:fontsize=48:box=1:boxcolor=black:boxborderw=5:x=20:y=20,scale=1280:720 -b:v 2400k "q_720.webm" \
+ -an -f mp4 -crf 27 -c:v libvpx-vp9 -r 23.98 -keyint_min 48 -g 48 -vf drawtext=fontfile:text='360p':fontcolor=white:fontsize=48:box=1:boxcolor=black:boxborderw=5:x=20:y=20,scale=640:360 -b:v 800k "q_360.webm" \
+ -vn -acodec libvorbis -ab 128k -ar 48000 audio.webm \
+&& ffmpeg \
+  -i q_1080.webm \
+  -i q_720.webm \
+  -i q_360.webm \
+  -i audio.webm \
+  -c copy -dash 2000 \
+  -map 0 -map 1 -map 2 -map 3 \
+  -adaptation_sets "id=0,streams=0,1,2 id=1,streams=3" \
+  dash/video-manifest.mpd
+  
+  
+/------------------------------------------------------\ mp4box high quality /------------------------------------------------------\
+mkdir dash && ffmpeg -y -i Moneyball_21_10.mp4 \
+ -an -crf 27 -c:v libx264 -r 23.98 -x264opts 'keyint=48:min-keyint=48:no-scenecut' -vf drawtext=fontfile:text='1080p':fontcolor=white:fontsize=48:box=1:boxcolor=black:boxborderw=5:x=20:y=20,scale=1920:1080 -b:v 3000k "q_1080.mp4" \
+ -an -crf 27 -c:v libx264 -r 23.98 -x264opts 'keyint=48:min-keyint=48:no-scenecut' -vf drawtext=fontfile:text='720p':fontcolor=white:fontsize=48:box=1:boxcolor=black:boxborderw=5:x=20:y=20,scale=1280:720 -b:v 1500k "q_720.mp4" \
+ -an -crf 27 -c:v libx264 -r 23.98 -x264opts 'keyint=48:min-keyint=48:no-scenecut' -vf drawtext=fontfile:text='360p':fontcolor=white:fontsize=48:box=1:boxcolor=black:boxborderw=5:x=20:y=20,scale=640:360 -b:v 500k "q_360.mp4" \
+ -vn -c:a aac -b:a 128k -ar 48000 "audio.m4a" \
+&& MP4Box -dash 4000 -frag 2000 -rap \
+-segment-name 'segment_$RepresentationID$_' -fps 23.98 \
+q_360.mp4#video:id=360p \
+q_720.mp4#video:id=720p \
+q_1080.mp4#video:id=1080p:role=main \
+audio.m4a#audio:id=Sound:role=main \
+-out dash/video-manifest.mpd
+
+
+/------------------------------------------------------\ ffmpeg only - 30fps /------------------------------------------------------\
+mkdir dash && ffmpeg -y -i Interstellar_21_10.mp4 \
+ -an -crf 25 -c:v libx264 -r 30 -x264opts 'keyint=60:min-keyint=60:no-scenecut' -vf drawtext=fontfile:text='720p':fontcolor=white:fontsize=48:box=1:boxcolor=black:boxborderw=5:x=20:y=20,scale=1280:610 -b:v 3600k "q_720.mp4" \
+ -an -crf 25 -c:v libx264 -r 30 -x264opts 'keyint=60:min-keyint=60:no-scenecut' -vf drawtext=fontfile:text='480p':fontcolor=white:fontsize=48:box=1:boxcolor=black:boxborderw=5:x=20:y=20,scale=854:406 -b:v 1500k "q_480.mp4" \
+ -an -crf 25 -c:v libx264 -r 30 -x264opts 'keyint=60:min-keyint=60:no-scenecut' -vf drawtext=fontfile:text='360p':fontcolor=white:fontsize=48:box=1:boxcolor=black:boxborderw=5:x=20:y=20,scale=640:304 -b:v 500k "q_360.mp4" \
+ -vn -c:a aac -b:a 128k -ar 48000 "audio.m4a" \
+&& ffmpeg \
+  -i q_720.mp4 \
+  -i q_480.mp4 \
+  -i q_360.mp4 \
+  -i audio.m4a \
+  -c copy -dash 2000 \
+  -map 0 -map 1 -map 2 -map 3 \
+  -adaptation_sets "id=0,streams=0,1,2 id=1,streams=3" \
+  dash/video-manifest.mpd
+  
+ 
+ /------------------------------------------------------\ mp4box high quality /------------------------------------------------------\
+mkdir dash && ffmpeg -y -i Godfather_21_10.mp4 \
+ -an -crf 27 -c:v libx264 -r 29.97 -x264opts 'keyint=60:min-keyint=60:no-scenecut' -vf drawtext=fontfile:text='360p 1000k':fontcolor=white:fontsize=48:box=1:boxcolor=black:boxborderw=5:x=20:y=20,scale=640:304 -b:v 1000k "q_360_h.mp4" \
+ -an -crf 27 -c:v libx264 -r 29.97 -x264opts 'keyint=60:min-keyint=60:no-scenecut' -vf drawtext=fontfile:text='360p 500k':fontcolor=white:fontsize=48:box=1:boxcolor=black:boxborderw=5:x=20:y=20,scale=640:304 -b:v 500k "q_360.mp4" \
+ -vn -c:a aac -b:a 128k -ar 48000 "audio.m4a" \
+&& MP4Box -dash 4000 -frag 2000 -rap \
+-segment-name 'segment_$RepresentationID$_' -fps 29.97 \
+q_360.mp4#video:id=360p \
+q_360_h.mp4#video:id=360p_h:role=main \
+audio.m4a#audio:id=Sound:role=main \
+-out dash/video-manifest.mpd
+
+
+/------------------------------------------------------\ mp4box high quality /------------------------------------------------------\
+mkdir dash && ffmpeg -y -i TheWitcher_21_10.mp4 \
+ -an -crf 27 -c:v libx264 -r 24 -x264opts 'keyint=48:min-keyint=48:no-scenecut' -vf drawtext=fontfile:text='720p':fontcolor=white:fontsize=48:box=1:boxcolor=black:boxborderw=5:x=20:y=20,scale=1280:720 -b:v 1500k "q_720.mp4" \
+ -an -crf 27 -c:v libx264 -r 24 -x264opts 'keyint=48:min-keyint=48:no-scenecut' -vf drawtext=fontfile:text='480p':fontcolor=white:fontsize=48:box=1:boxcolor=black:boxborderw=5:x=20:y=20,scale=854:406 -b:v 1500k "q_480.mp4" \
+ -an -crf 27 -c:v libx264 -r 24 -x264opts 'keyint=48:min-keyint=48:no-scenecut' -vf drawtext=fontfile:text='360p':fontcolor=white:fontsize=48:box=1:boxcolor=black:boxborderw=5:x=20:y=20,scale=640:360 -b:v 500k "q_360.mp4" \
+ -vn -c:a aac -b:a 128k -ar 48000 "audio.m4a" \
+&& MP4Box -dash 4000 -frag 2000 -rap \
+-segment-name 'segment_$RepresentationID$_' -fps 24 \
+q_360.mp4#video:id=360p \
+q_480.mp4#video:id=480p \
+q_720.mp4#video:id=720p:role=main \
+audio.m4a#audio:id=Sound:role=main \
+-out dash/video-manifest.mpd
+
+
+/------------------------------------------------------\ mp4box high quality /------------------------------------------------------\
+mkdir dash && ffmpeg -y -i DriveToSurvive_21_10.mp4 \
+ -an -crf 27 -c:v libx264 -r 50 -x264opts 'keyint=100:min-keyint=100:no-scenecut' -vf drawtext=fontfile:text='1080p':fontcolor=white:fontsize=48:box=1:boxcolor=black:boxborderw=5:x=20:y=20,scale=1920:914 -b:v 3000k "q_1080.mp4" \
+ -an -crf 27 -c:v libx264 -r 50 -x264opts 'keyint=100:min-keyint=100:no-scenecut' -vf drawtext=fontfile:text='720p':fontcolor=white:fontsize=48:box=1:boxcolor=black:boxborderw=5:x=20:y=20,scale=1280:610 -b:v 1500k "q_720.mp4" \
+ -an -crf 27 -c:v libx264 -r 50 -x264opts 'keyint=100:min-keyint=100:no-scenecut' -vf drawtext=fontfile:text='360p':fontcolor=white:fontsize=48:box=1:boxcolor=black:boxborderw=5:x=20:y=20,scale=640:304 -b:v 500k "q_360.mp4" \
+ -vn -c:a aac -b:a 128k -ar 48000 "audio.m4a" \
+&& MP4Box -dash 4000 -frag 2000 -rap \
+-segment-name 'segment_$RepresentationID$_' -fps 50 \
+q_360.mp4#video:id=360p \
+q_720.mp4#video:id=720p \
+q_1080.mp4#video:id=1080p:role=main \
+audio.m4a#audio:id=Sound:role=main \
+-out dash/video-manifest.mpd
+
+ffmpeg -i PersonOfInterest.mp4 -vf crop=1280:610 PersonOfInterest_21_10.mp4
+/------------------------------------------------------\ mp4box high quality /------------------------------------------------------\
+mkdir dash && ffmpeg -y -i PersonOfInterest_21_10.mp4 \
+ -an -crf 27 -c:v libx264 -r 23.98 -x264opts 'keyint=48:min-keyint=48:no-scenecut' -vf drawtext=fontfile:text='720p':fontcolor=white:fontsize=48:box=1:boxcolor=black:boxborderw=5:x=20:y=20,scale=1280:720 -b:v 1500k "q_720.mp4" \
+ -an -crf 27 -c:v libx264 -r 23.98 -x264opts 'keyint=48:min-keyint=48:no-scenecut' -vf drawtext=fontfile:text='480p':fontcolor=white:fontsize=48:box=1:boxcolor=black:boxborderw=5:x=20:y=20,scale=854:406 -b:v 1500k "q_480.mp4" \
+ -an -crf 27 -c:v libx264 -r 23.98 -x264opts 'keyint=48:min-keyint=48:no-scenecut' -vf drawtext=fontfile:text='360p':fontcolor=white:fontsize=48:box=1:boxcolor=black:boxborderw=5:x=20:y=20,scale=640:360 -b:v 500k "q_360.mp4" \
+ -vn -c:a aac -b:a 128k -ar 48000 "audio.m4a" \
+&& MP4Box -dash 4000 -frag 2000 -rap \
+-segment-name 'segment_$RepresentationID$_' -fps 23.98 \
+q_360.mp4#video:id=360p \
+q_480.mp4#video:id=480p \
+q_720.mp4#video:id=720p:role=main \
+audio.m4a#audio:id=Sound:role=main \
+-out dash/video-manifest.mpd
+
