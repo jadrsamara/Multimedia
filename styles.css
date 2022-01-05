@@ -235,3 +235,20 @@ body {
         font-size: 2.95vh;
     }
 }
+
+.back_img_ {
+    position: fixed;
+    top: 2em;
+    left: 2em;
+    min-width: 60px;
+    min-height: 60px;
+    z-index: 1;
+    padding: 1em;
+}
+
+.about {
+    position: fixed;
+    top: 0.5em;
+    right: 2em;
+    z-index: 1;
+}
