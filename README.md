@@ -1,8 +1,8 @@
 # Multimedia
-##### 1170685**
+##### 1170685
 ---
-###Tasks are in the "Tasks" Folder
+### Tasks are in the "Tasks" Folder
 -> https://github.com/jadrsamara/Multimedia/tree/main/Tasks
 ---
-##Streaming Server Project is here:
+## Streaming Server Project is here:
 -> jadrsamara.github.io/multimedia/
